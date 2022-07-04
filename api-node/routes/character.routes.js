@@ -91,5 +91,29 @@ router.post("/", async (req, res, next) => {
   });
   
 
+  router.delete("/:id", async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      await Character.findByIdAndDelete(id);
+      return res.status(200).json("Character deleted!");
+    } catch (error) {
+      return next(error);
+    }
+  });
+
+  router.put('/:id', async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const character = new Character(req.body);
+        character._id = id;
+        await Character.findByIdAndUpdate(id , character)
+        return res.status(200).json(character);
+    } catch (error) {
+        return next(error);
+    }
+});
+
+  
+
 export { router as characterRoutes };
 
