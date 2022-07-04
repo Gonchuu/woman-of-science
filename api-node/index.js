@@ -2,6 +2,7 @@ import express from "express";
 import { connection } from '../api-node/utils/db.js';
 import { Character } from './models/Character.js';
 
+import { userRoutes } from "./routes/user.routes.js";
 import { characterRoutes } from './routes/character.routes.js';
 import { cityRoutes } from "./routes/city.routes.js";
 
@@ -15,12 +16,17 @@ router.get("/", (req, res) => {
   res.send("Hello");
 });
 
+//JWT
+server.set("secretKey", "nodeRestApi");
+
 //Middlewares
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 server.use("/", router);
 
+
 //Routes
+server.use('/user', userRoutes);
 server.use('/characters', characterRoutes);
 server.use('/cities', cityRoutes);
 
