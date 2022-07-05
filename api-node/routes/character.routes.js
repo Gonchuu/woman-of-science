@@ -1,9 +1,10 @@
 import express from "express";
+import { isAuth } from "../authentication/jwt.js";
 import { Character } from "../models/Character.js";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/", [isAuth], async (req, res) => {
   const { minBirth = 1700, maxBirth = 2000 } = req.query;
 
   //Condición para fecha nac. mínima y máxima
