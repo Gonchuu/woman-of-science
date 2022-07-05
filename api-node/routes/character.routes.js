@@ -1,4 +1,3 @@
-
 import express from "express";
 import { Character } from "../models/Character.js";
 
@@ -67,53 +66,49 @@ router.get("/name/:name", async (req, res) => {
 
 //POST
 router.post("/", async (req, res, next) => {
-    try {
+  try {
     //   const characterPicture = req.file.path ? req.file.path : null;
-      // Crearemos una instancia de character con los datos enviados
-      const newCharacter = new Character({
-        name: req.body.name,
-        birth: req.body.birth,
-        title: req.body.title,
-        phrase: req.body.phrase,
-        discoveries: req.body.discoveries,
-        // picture: imageToUri(characterPicture),
-      });
-  
-      // Guardamos el personaje en la DB
-      const createdCharacter = await newCharacter.save();
+    // Crearemos una instancia de character con los datos enviados
+    const newCharacter = new Character({
+      name: req.body.name,
+      birth: req.body.birth,
+      title: req.body.title,
+      phrase: req.body.phrase,
+      discoveries: req.body.discoveries,
+      // picture: imageToUri(characterPicture),
+    });
+
+    // Guardamos el personaje en la DB
+    const createdCharacter = await newCharacter.save();
     //   await fs.unlinkSync(characterPicture);
-  
-      return res.status(201).json(createdCharacter);
-    } catch (error) {
-      // Lanzamos la función next con el error para que lo gestione Express
-      next(error);
-    }
-  });
-  
 
-  router.delete("/:id", async (req, res, next) => {
-    try {
-      const { id } = req.params;
-      await Character.findByIdAndDelete(id);
-      return res.status(200).json("Character deleted!");
-    } catch (error) {
-      return next(error);
-    }
-  });
-
-  router.put('/:id', async (req, res, next) => {
-    try {
-        const { id } = req.params;
-        const character = new Character(req.body);
-        character._id = id;
-        await Character.findByIdAndUpdate(id , character)
-        return res.status(200).json(character);
-    } catch (error) {
-        return next(error);
-    }
+    return res.status(201).json(createdCharacter);
+  } catch (error) {
+    // Lanzamos la función next con el error para que lo gestione Express
+    next(error);
+  }
 });
 
-  
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    await Character.findByIdAndDelete(id);
+    return res.status(200).json("Character deleted!");
+  } catch (error) {
+    return next(error);
+  }
+});
+
+router.put("/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const character = new Character(req.body);
+    character._id = id;
+    await Character.findByIdAndUpdate(id, character);
+    return res.status(200).json(character);
+  } catch (error) {
+    return next(error);
+  }
+});
 
 export { router as characterRoutes };
-
