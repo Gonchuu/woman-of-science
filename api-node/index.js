@@ -26,7 +26,7 @@ server.use("/", router);
 
 
 //Routes
-server.use('/user', userRoutes);
+server.use('/users', userRoutes);
 server.use('/characters', characterRoutes);
 server.use('/cities', cityRoutes);
 
