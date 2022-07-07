@@ -70,8 +70,8 @@ router.post("/login", async (req, res, next) => {
 
     const token = jwt.sign(
       {
-        id: userInfo._id,
-        email: userInfo.email,
+        id: user._id,
+        email: user.email,
       },
       req.app.get("secretKey"),
       { expiresIn: "1h" }
@@ -81,10 +81,23 @@ router.post("/login", async (req, res, next) => {
     return res.json({
       status: 200,
       message: "Loggin success",
-      data: { userId: userInfo._id, token: token },
+      data: { userId: user._id, token: token },
     });
   } catch (error) {
     return next(error);
+  }
+});
+
+router.post("/logout", async (req, res, next) => {
+  try {
+    req.authority = null;
+    return res.json({
+      status:200,
+      message:'Logout!',
+      token:null
+    });
+  } catch (error) {
+    next(error)
   }
 });
 
