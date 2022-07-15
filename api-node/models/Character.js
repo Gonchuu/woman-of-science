@@ -11,6 +11,7 @@ const characterSchema = new Schema(
     title: { type: String, required: true },
     phrase: { type: String},
     discoveries: { type: String},
+    picture: { type: String},
   },
   {
     // Esta propiedad servirá para guardar las fechas de creación y actualización de los documentos

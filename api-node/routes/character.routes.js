@@ -1,4 +1,5 @@
 import express from "express";
+import { upload } from '../middlewares/file.middleware.js';
 import { isAuth } from "../authentication/jwt.js";
 import { Character } from "../models/Character.js";
 
@@ -66,9 +67,9 @@ router.get("/name/:name", async (req, res) => {
 });
 
 //POST
-router.post("/", async (req, res, next) => {
+router.post("/", [upload.single('picture')], async (req, res, next) => {
   try {
-    //   const characterPicture = req.file.path ? req.file.path : null;
+    const characterPicture = req.file ? req.file.filename : null;
     // Crearemos una instancia de character con los datos enviados
     const newCharacter = new Character({
       name: req.body.name,
@@ -76,6 +77,7 @@ router.post("/", async (req, res, next) => {
       title: req.body.title,
       phrase: req.body.phrase,
       discoveries: req.body.discoveries,
+      picture: characterPicture
       // picture: imageToUri(characterPicture),
     });
 
