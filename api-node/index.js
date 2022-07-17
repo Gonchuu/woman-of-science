@@ -1,6 +1,10 @@
 import express from "express";
 import { connection } from '../api-node/utils/db.js';
 import { Character } from './models/Character.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 import { userRoutes } from "./routes/user.routes.js";
 import { characterRoutes } from './routes/character.routes.js';
@@ -19,10 +23,12 @@ router.get("/", (req, res) => {
 //JWT
 server.set("secretKey", "nodeRestApi");
 
+
 //Middlewares
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 server.use("/", router);
+server.use(express.static(path.join(__dirname, 'public')));
 
 
 //Routes

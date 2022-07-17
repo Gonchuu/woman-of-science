@@ -2,8 +2,7 @@ import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 
 const VALID_FILE_TYPES = ['image/png', 'image/jpg', 'image/jpeg'];
@@ -13,7 +12,7 @@ const storage = multer.diskStorage({
       cb(null, `${Date.now()} - ${file.originalname}`);
     },
     destination: (req, file, cb) => {
-      cb(null, path.join(__dirname, '../public/uploads'));
+      cb(null, path.join(__dirname, '../temp'));
     }
   });
 

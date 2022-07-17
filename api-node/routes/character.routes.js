@@ -1,7 +1,9 @@
 import express from "express";
+import fs from "fs";
 import { upload } from '../middlewares/file.middleware.js';
 import { isAuth } from "../authentication/jwt.js";
 import { Character } from "../models/Character.js";
+import imageToUri from 'image-to-uri';
 
 const router = express.Router();
 
@@ -69,7 +71,8 @@ router.get("/name/:name", async (req, res) => {
 //POST
 router.post("/", [upload.single('picture')], async (req, res, next) => {
   try {
-    const characterPicture = req.file ? req.file.filename : null;
+
+    const characterPicture = req.file ? req.file.path : null;
     // Crearemos una instancia de character con los datos enviados
     const newCharacter = new Character({
       name: req.body.name,
@@ -77,13 +80,13 @@ router.post("/", [upload.single('picture')], async (req, res, next) => {
       title: req.body.title,
       phrase: req.body.phrase,
       discoveries: req.body.discoveries,
-      picture: characterPicture
-      // picture: imageToUri(characterPicture),
+      pictureB64: imageToUri(characterPicture)
+      
     });
 
     // Guardamos el personaje en la DB
     const createdCharacter = await newCharacter.save();
-    //   await fs.unlinkSync(characterPicture);
+    await fs.unlinkSync(characterPicture);
 
     return res.status(201).json(createdCharacter);
   } catch (error) {
