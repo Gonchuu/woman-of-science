@@ -1,4 +1,6 @@
 import express from "express";
+import dotenv from "dotenv";
+dotenv.config();
 import { connection } from '../api-node/utils/db.js';
 import { Character } from './models/Character.js';
 import path from 'path';
