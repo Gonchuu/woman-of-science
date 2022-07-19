@@ -7,6 +7,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import { DB_URL } from './utils/db.js';
 
 import { userRoutes } from "./routes/user.routes.js";
 import { characterRoutes } from './routes/character.routes.js';

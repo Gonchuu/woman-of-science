@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
 
 //URL local de la BBDD en mongoose y su nombre
 const DB_URL = process.env.DB_URL || "mongodb://localhost:27017/Women-of-science";

@@ -9,6 +9,7 @@ const characterList = [
     name: "Marie Curie",
     birth: 1867,
     title: "Física y Química",
+    image: "./public/uploads/IMG_9068.jpg",
     phrase: "Me enseñaron que el camino del progreso no es ni rapido ni facil.",
     discoveries:
     "-Primera mujer que obtuvo un doctorado en Francia-Pionera en la investigacion sobre la radioactividad- Fundó el instituto Curie en París-Ganó dos Premios Nobel-Descubrio dos elementos, Polonio y Radio",
@@ -17,6 +18,7 @@ const characterList = [
     name: "Lillian Gilbreth",
     birth: 1878,
     title: "Psicóloga e Ingeniera Industrial",
+    image: "",
     phrase:
     "Considerábamos nuestro tiempo demasiado valioso como para despreciarlo a las tareas del hogar. Éramos ejecutivas",
     discoveries:
@@ -26,6 +28,7 @@ const characterList = [
     name: "Edith Clarke",
     birth: 1883,
     title: "Ingeniera Eléctrica",
+    image: "",
     phrase:
     "No hay demanda de ingenieras eléctricas  como la hay de doctoras, pero siempra hay demanda de alguien que sepa hacer un buen trabajo",
     discoveries:
@@ -35,6 +38,7 @@ const characterList = [
     name: "Gerty Cori",
     birth: 1896,
     title: "Bioquímica",
+    image: "",
     phrase:
     "como investigadora, los momentos inolvidables de mi vida son excepcionales...cuando el velo que esconde los secretos de la naturaleza de repente se levanta",
     discoveries:
@@ -44,6 +48,7 @@ const characterList = [
     name: "Annie Easley",
     birth: 1933,
     title: "Programadora Informática, Matemática y Científica Espacial",
+    image: "",
     phrase:
     "Nada se les ha regalado ni a las minorías ni a las mujeres, ha sido necesario luchar para obtener las mismas oportunidades y seguimos luchando hoy en dia",
     discoveries:
@@ -53,6 +58,7 @@ const characterList = [
     name: "Jane Goodall",
     birth: 1934,
     title: "Primatóloga, Etóloga y Antropóloga",
+    image: "",
     phrase:
     "Sólo cuando nuestro inteligente cerebro y nuestro corazón humano trabajan juntos, podemos alcanzar nuestro mayor potencial.",
     discoveries:
