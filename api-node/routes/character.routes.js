@@ -1,9 +1,10 @@
 import express from "express";
 import fs from "fs";
-import { upload } from '../middlewares/file.middleware.js';
+import {upload} from '../middlewares/file.js';
 import { isAuth } from "../authentication/jwt.js";
 import { Character } from "../models/Character.js";
 import imageToUri from 'image-to-uri';
+import { deleteFile } from "../middlewares/deleteFile.js";
 
 const router = express.Router();
 
@@ -69,24 +70,22 @@ router.get("/name/:name", async (req, res) => {
 });
 
 //POST
-router.post("/", [upload.single('picture')], async (req, res, next) => {
+router.post("/", upload.single("picture"), async (req, res, next) => {
   try {
 
-    const characterPicture = req.file ? req.file.path : null;
+
     // Crearemos una instancia de character con los datos enviados
-    const newCharacter = new Character({
-      name: req.body.name,
-      birth: req.body.birth,
-      title: req.body.title,
-      phrase: req.body.phrase,
-      discoveries: req.body.discoveries,
-      pictureB64: imageToUri(characterPicture)
-      
-    });
+    const newCharacter = new Character(req.body);
+
+    if (req.file) {
+
+      newCharacter.picture = req.file.path;
+
+    }
 
     // Guardamos el personaje en la DB
     const createdCharacter = await newCharacter.save();
-    await fs.unlinkSync(characterPicture);
+    // await fs.unlinkSync(characterPicture);
 
     return res.status(201).json(createdCharacter);
   } catch (error) {
@@ -98,14 +97,18 @@ router.post("/", [upload.single('picture')], async (req, res, next) => {
 router.delete("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
-    await Character.findByIdAndDelete(id);
+    const characterDB = await Character.findByIdAndDelete(id);
+    if(characterDB.picture) {
+      deleteFile(characterDB.picture)
+    }
+    
     return res.status(200).json("Character deleted!");
   } catch (error) {
     return next(error);
   }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id",upload.single("picture"), async (req, res, next) => {
   try {
     const { id } = req.params;
     const character = new Character(req.body);

@@ -1,13 +1,14 @@
 import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
-import { connection } from '../api-node/utils/db.js';
+import { connectDb } from '../api-node/utils/db.js';
+import { v2 as cloudinary } from 'cloudinary'
 import { Character } from './models/Character.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-import { DB_URL } from './utils/db.js';
+
 
 import { userRoutes } from "./routes/user.routes.js";
 import { characterRoutes } from './routes/character.routes.js';
@@ -16,6 +17,17 @@ import { cityRoutes } from "./routes/city.routes.js";
 //SERVER
 const PORT = process.env.PORT || 3000;
 const server = express();
+
+connectDb();
+cloudinary.config({
+
+cloud_name: process.env.CLOUD_NAME,
+
+api_key: process.env.API_KEY,
+
+api_secret: process.env.API_SECRET,
+
+})
 
 const router = express.Router();
 
