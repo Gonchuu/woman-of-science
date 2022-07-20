@@ -1,9 +1,9 @@
 import express from "express";
 import fs from "fs";
-import {upload} from '../middlewares/file.js';
+import { upload } from "../middlewares/file.js";
 import { isAuth } from "../authentication/jwt.js";
 import { Character } from "../models/Character.js";
-import imageToUri from 'image-to-uri';
+import imageToUri from "image-to-uri";
 import { deleteFile } from "../middlewares/deleteFile.js";
 
 const router = express.Router();
@@ -72,15 +72,11 @@ router.get("/name/:name", async (req, res) => {
 //POST
 router.post("/", upload.single("picture"), async (req, res, next) => {
   try {
-
-
     // Crearemos una instancia de character con los datos enviados
     const newCharacter = new Character(req.body);
 
     if (req.file) {
-
       newCharacter.picture = req.file.path;
-
     }
 
     // Guardamos el personaje en la DB
@@ -98,17 +94,17 @@ router.delete("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     const characterDB = await Character.findByIdAndDelete(id);
-    if(characterDB.picture) {
-      deleteFile(characterDB.picture)
+    if (characterDB.picture) {
+      deleteFile(characterDB.picture);
     }
-    
+
     return res.status(200).json("Character deleted!");
   } catch (error) {
     return next(error);
   }
 });
 
-router.put("/:id",upload.single("picture"), async (req, res, next) => {
+router.put("/:id", upload.single("picture"), async (req, res, next) => {
   try {
     const { id } = req.params;
     const character = new Character(req.body);
